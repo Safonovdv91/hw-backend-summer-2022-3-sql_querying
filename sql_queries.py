@@ -39,13 +39,12 @@ TASK_2_QUERY = """
 TASK_3_QUERY = """
 SELECT count(*)
 from flights as f
-join airports as dep on f.departure_airport = dep.airport_code
-join airports as arr on f.arrival_airport = arr.airport_code
+join airports_data as dep on f.departure_airport = dep.airport_code
+join airports_data as arr on f.arrival_airport = arr.airport_code
 where dep.timezone = arr.timezone
 group by dep.timezone
 order by count(*) desc
-limit 1
-;
+limit 1;
 """
 #  count
 # --------
