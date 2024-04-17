@@ -36,14 +36,14 @@ TASK_2_QUERY = """
 # Вывести число перелетов внутри одной таймзоны
 # Нужно вывести 1 значение в колонке count
 TASK_3_QUERY = """
-SELECT count(*) as count
-FROM flights AS f
-    JOIN airports_data as dep on f.departure_airport = dep.airport_code
-    JOIN airports_data as arr on f.arrival_airport = arr.airport_code
-WHERE dep.timezone = arr.timezone
-    GROUP BY dep.timezone
-    ORDER BY count(*) desc
-LIMIT 1;
+SELECT 
+    (SELECT COUNT(*) FROM flights AS f_inner
+     JOIN airports_data AS dep_inner ON f_inner.departure_airport = dep_inner.airport_code) 
+    -
+    (SELECT COUNT(*) FROM flights AS f_outer
+     JOIN airports_data AS dep_outer ON f_outer.departure_airport = dep_outer.airport_code
+     JOIN airports_data AS arr_outer ON f_outer.arrival_airport = arr_outer.airport_code
+     WHERE dep_outer.timezone <> arr_outer.timezone) AS count;
 """
 #  count
 # --------
