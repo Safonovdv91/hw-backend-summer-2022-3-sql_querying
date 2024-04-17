@@ -2,11 +2,10 @@
 # Duration - разница между scheduled_arrival и scheduled_departure.
 # В ответе должно быть 2 колонки [flight_no, duration]
 TASK_1_QUERY = """
-	SELECT flight_no, ()SELECT flight_no, (scheduled_arrival - scheduled_departure) as Duration
+	SELECT flight_no, (scheduled_arrival - scheduled_departure) as Duration
  	FROM flights
 	ORDER BY duration 
 	LIMIT 5;
-
 """
 #  flight_no | duration
 # -----------+----------
@@ -37,14 +36,14 @@ TASK_2_QUERY = """
 # Вывести число перелетов внутри одной таймзоны
 # Нужно вывести 1 значение в колонке count
 TASK_3_QUERY = """
-SELECT count(*)
-from flights as f
-join airports_data as dep on f.departure_airport = dep.airport_code
-join airports_data as arr on f.arrival_airport = arr.airport_code
-where dep.timezone = arr.timezone
-group by dep.timezone
-order by count(*) desc
-limit 1;
+SELECT count(*) as count
+FROM flights AS f
+    JOIN airports_data as dep on f.departure_airport = dep.airport_code
+    JOIN airports_data as arr on f.arrival_airport = arr.airport_code
+WHERE dep.timezone = arr.timezone
+    GROUP BY dep.timezone
+    ORDER BY count(*) desc
+LIMIT 1;
 """
 #  count
 # --------
