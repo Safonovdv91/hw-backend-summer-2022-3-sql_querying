@@ -37,15 +37,15 @@ TASK_2_QUERY = """
 # Вывести число перелетов внутри одной таймзоны
 # Нужно вывести 1 значение в колонке count
 TASK_3_QUERY = """
-select count(f.flight_no), a_dep.timezone
+SELECT count(*)
 from flights as f
-join airports_data as a_dep
-ON f.departure_airport = a_dep.airport_code
-join airports_data as a_arr
-on f.arrival_airport = a_arr.airport_code
-where a_dep.timezone = a_arr.timezone
-group by a_dep.timezone order by count desc limit 1;
-
+join airports as dep on f.departure_airport = dep.airport_code
+join airports as arr on f.arrival_airport = arr.airport_code
+where dep.timezone = arr.timezone
+group by dep.timezone
+order by count(*) desc
+limit 1
+;
 """
 #  count
 # --------
